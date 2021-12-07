@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootTest(classes = ConfigurationPropertiesTest.TestApplication.class)
 public class ConfigurationPropertiesTest {
@@ -50,6 +53,19 @@ public class ConfigurationPropertiesTest {
     Assertions.assertEquals("Admin Role", properties.getRoles().get("admin").getName());
     Assertions.assertEquals("finance", properties.getRoles().get("finance").getId());
     Assertions.assertEquals("Finance Role", properties.getRoles().get("finance").getName());
+  }
+
+  @Test
+  void testDuration() {
+    Assertions.assertEquals(Duration.ofSeconds(10), properties.getDefaultTimeout());
+  }
+
+  @Test
+  void testCustomConverter() {
+    Date expireDate = properties.getExpireDate();
+
+    var dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Assertions.assertEquals("2020-10-10", dateFormat.format(expireDate));
   }
 
   @SpringBootApplication
