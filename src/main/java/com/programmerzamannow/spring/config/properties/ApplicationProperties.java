@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @Setter
 @ConfigurationProperties("application")
@@ -17,6 +20,10 @@ public class ApplicationProperties {
 
   private DatabaseProperties database;
 
+  private List<Role> defaultRoles;
+
+  private Map<String, Role> roles;
+
   @Getter
   @Setter
   public static class DatabaseProperties {
@@ -28,6 +35,20 @@ public class ApplicationProperties {
     private String database;
 
     private String url;
+
+    private List<String> whitelistTables;
+
+    private Map<String, Integer> maxTablesSize;
+
+  }
+
+  @Getter
+  @Setter
+  public static class Role {
+
+    private String id;
+
+    private String name;
 
   }
 }
